@@ -30,7 +30,14 @@ class FirstViewController: UIViewController, WKUIDelegate {
         super.viewDidLoad()
 
         updateCurrentPrintInfo()
-        loadCameraFeed()
+        
+        //initialize camera
+        uWebCamera.scrollView.isScrollEnabled = false
+        if let url = URL(string:"\(serverUrl)/webcam/?action=snapshot") {
+            let request = URLRequest(url: url)
+            uWebCamera.load(request)
+        }
+        updateCameraFeed()
     }
 
     
@@ -75,10 +82,12 @@ class FirstViewController: UIViewController, WKUIDelegate {
     }
     
     
-    func loadCameraFeed() {
-        let url = URL(string:"\(serverUrl)/webcam/?action=stream")
-        let request = URLRequest(url: url!)
-        uWebCamera.load(request)
+    func updateCameraFeed() {
+        uWebCamera.reload()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.updateCameraFeed()
+        }
     }
     
     
