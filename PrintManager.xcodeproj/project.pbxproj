@@ -3,17 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		037A9B3C2191042300BDE00C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A9B3B2191042300BDE00C /* AppDelegate.swift */; };
 		037A9B3E2191042300BDE00C /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A9B3D2191042300BDE00C /* FirstViewController.swift */; };
 		037A9B402191042300BDE00C /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A9B3F2191042300BDE00C /* SecondViewController.swift */; };
-		037A9B432191042300BDE00C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 037A9B412191042300BDE00C /* Main.storyboard */; };
 		037A9B452191042500BDE00C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 037A9B442191042500BDE00C /* Assets.xcassets */; };
-		037A9B482191042500BDE00C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 037A9B462191042500BDE00C /* LaunchScreen.storyboard */; };
 		037A9B50219108B200BDE00C /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A9B4F219108B200BDE00C /* Job.swift */; };
+		F54F73AB219692E1000455E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F54F73A9219692E0000455E9 /* Main.storyboard */; };
+		F54F73AE2196930E000455E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F54F73AC2196930E000455E9 /* LaunchScreen.storyboard */; };
+		F54F73B021969A33000455E9 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = F54F73AF21969A33000455E9 /* Settings.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,12 +22,13 @@
 		037A9B3B2191042300BDE00C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		037A9B3D2191042300BDE00C /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		037A9B3F2191042300BDE00C /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
-		037A9B422191042300BDE00C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		037A9B442191042500BDE00C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		037A9B472191042500BDE00C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		037A9B492191042500BDE00C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		037A9B4F219108B200BDE00C /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		03F5397A21914E3000C51504 /* PrintManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrintManager.entitlements; sourceTree = "<group>"; };
+		F54F73AA219692E0000455E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F54F73AD2196930E000455E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F54F73AF21969A33000455E9 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,10 +65,11 @@
 				037A9B3B2191042300BDE00C /* AppDelegate.swift */,
 				037A9B3D2191042300BDE00C /* FirstViewController.swift */,
 				037A9B3F2191042300BDE00C /* SecondViewController.swift */,
-				037A9B412191042300BDE00C /* Main.storyboard */,
+				F54F73A9219692E0000455E9 /* Main.storyboard */,
+				F54F73AC2196930E000455E9 /* LaunchScreen.storyboard */,
 				037A9B442191042500BDE00C /* Assets.xcassets */,
-				037A9B462191042500BDE00C /* LaunchScreen.storyboard */,
 				037A9B492191042500BDE00C /* Info.plist */,
+				F54F73AF21969A33000455E9 /* Settings.plist */,
 				037A9B4F219108B200BDE00C /* Job.swift */,
 			);
 			path = PrintManager;
@@ -104,17 +107,16 @@
 				TargetAttributes = {
 					037A9B372191042300BDE00C = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
 				};
 			};
 			buildConfigurationList = 037A9B332191042300BDE00C /* Build configuration list for PBXProject "PrintManager" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -136,9 +138,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				037A9B482191042500BDE00C /* LaunchScreen.storyboard in Resources */,
+				F54F73AE2196930E000455E9 /* LaunchScreen.storyboard in Resources */,
+				F54F73B021969A33000455E9 /* Settings.plist in Resources */,
 				037A9B452191042500BDE00C /* Assets.xcassets in Resources */,
-				037A9B432191042300BDE00C /* Main.storyboard in Resources */,
+				F54F73AB219692E1000455E9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,18 +162,18 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		037A9B412191042300BDE00C /* Main.storyboard */ = {
+		F54F73A9219692E0000455E9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				037A9B422191042300BDE00C /* Base */,
+				F54F73AA219692E0000455E9 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		037A9B462191042500BDE00C /* LaunchScreen.storyboard */ = {
+		F54F73AC2196930E000455E9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				037A9B472191042500BDE00C /* Base */,
+				F54F73AD2196930E000455E9 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -297,7 +300,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JQL2BSPFWZ;
+				DEVELOPMENT_TEAM = H9SXWJQ397;
 				INFOPLIST_FILE = PrintManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -305,7 +308,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = codymeridith.PrintManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -315,7 +318,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JQL2BSPFWZ;
+				DEVELOPMENT_TEAM = H9SXWJQ397;
 				INFOPLIST_FILE = PrintManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -323,7 +326,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = codymeridith.PrintManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
