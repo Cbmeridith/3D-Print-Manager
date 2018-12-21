@@ -35,15 +35,29 @@ class FirstViewController: UIViewController, WKUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         getSettings()
         updateCurrentPrintInfo()
-        loadCameraFeed()
+        
+        //initialize camera
+        uWebCamera.scrollView.isScrollEnabled = false
+        if let url = URL(string:"\(serverUrl)/webcam/?action=snapshot") {
+            let request = URLRequest(url: url)
+            uWebCamera.load(request)
+        }
+        
+        updateCameraFeed()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         getSettings()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     
     func getSettings() {
         // Copy plist file
@@ -88,18 +102,13 @@ class FirstViewController: UIViewController, WKUIDelegate {
         // Make API URL
         apiUrl = serverUrl!+"/api"
         //print("API URL: ", apiUrl!)
-
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     
     func updateCurrentPrintInfo() {
         let url = URL(string: "\(apiUrl!)/job")!
-
+        
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
@@ -132,10 +141,12 @@ class FirstViewController: UIViewController, WKUIDelegate {
     }
     
     
-    func loadCameraFeed() {
-        let url = URL(string:"\(serverUrl!)/webcam/?action=stream")
-        let request = URLRequest(url: url!)
-        uWebCamera.load(request)
+    func updateCameraFeed() {
+        uWebCamera.reload()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.updateCameraFeed()
+        }
     }
     
     
@@ -216,6 +227,6 @@ class FirstViewController: UIViewController, WKUIDelegate {
         }
     }
     
-
+    
 }
 
