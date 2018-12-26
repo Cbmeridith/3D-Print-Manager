@@ -8,6 +8,7 @@
 
 import Foundation
 import UserNotifications
+import UIKit
 
 struct FileDetail : Codable {
     let name: String?
@@ -180,6 +181,12 @@ class Job : Codable {
             self.job = result.job
             self.progress = result.progress
             self.state = result.state
+            
+            
+            //check print completion and send notification only if app is in background
+            if(UIApplication.shared.applicationState == .background) {
+                self.checkForCompletion()
+            }
         }
         task.resume()
     }

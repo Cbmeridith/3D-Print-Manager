@@ -56,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Check for new data.
         
         job.update()
-        job.checkForCompletion()
         completionHandler(.newData)
     }
     
