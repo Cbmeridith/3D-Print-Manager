@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033DBC5E21CEB7590061F4BB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DBC5D21CEB7590061F4BB /* Settings.swift */; };
 		037A9B3C2191042300BDE00C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A9B3B2191042300BDE00C /* AppDelegate.swift */; };
 		037A9B3E2191042300BDE00C /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A9B3D2191042300BDE00C /* FirstViewController.swift */; };
 		037A9B402191042300BDE00C /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A9B3F2191042300BDE00C /* SecondViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033DBC5D21CEB7590061F4BB /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		037A9B382191042300BDE00C /* PrintManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrintManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		037A9B3B2191042300BDE00C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		037A9B3D2191042300BDE00C /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				037A9B492191042500BDE00C /* Info.plist */,
 				F54F73AF21969A33000455E9 /* Settings.plist */,
 				037A9B4F219108B200BDE00C /* Job.swift */,
+				033DBC5D21CEB7590061F4BB /* Settings.swift */,
 			);
 			path = PrintManager;
 			sourceTree = "<group>";
@@ -109,8 +112,11 @@
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1010;
 						SystemCapabilities = {
-							com.apple.Push = {
+							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 						};
 					};
@@ -157,6 +163,7 @@
 				037A9B3C2191042300BDE00C /* AppDelegate.swift in Sources */,
 				037A9B3E2191042300BDE00C /* FirstViewController.swift in Sources */,
 				037A9B50219108B200BDE00C /* Job.swift in Sources */,
+				033DBC5E21CEB7590061F4BB /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +308,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H9SXWJQ397;
+				DEVELOPMENT_TEAM = JQL2BSPFWZ;
 				INFOPLIST_FILE = PrintManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -319,7 +326,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H9SXWJQ397;
+				DEVELOPMENT_TEAM = JQL2BSPFWZ;
 				INFOPLIST_FILE = PrintManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

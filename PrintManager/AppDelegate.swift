@@ -14,11 +14,16 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var settings: Settings!
+    var job: Job!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        registerForPushNotifications()
+        settings = Settings()
+        job = Job(settings: settings)
+        UIApplication.shared.setMinimumBackgroundFetchInterval(1)
+        registerNotifications()
+        
         return true
     }
 
@@ -45,22 +50,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
-            print("Permission granted: \(granted)")
-            
-            guard granted else { return }
-            self.getNotificationSettings()
-        }
+    func application(_ application: UIApplication,
+    performFetchWithCompletionHandler completionHandler:
+    @escaping (UIBackgroundFetchResult) -> Void) {
+        // Check for new data.
+        
+        job.update()
+        job.checkForCompletion()
+        completionHandler(.newData)
     }
-
     
-    func getNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            print("Notification settings: \(settings)")
-            guard settings.authorizationStatus == .authorized else { return }
-            UIApplication.shared.registerForRemoteNotifications()
+    
+    
+    func registerNotifications() {
+        let notifCenter = UNUserNotificationCenter.current()
+        let notifTypes: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        notifCenter.requestAuthorization(options: notifTypes) {
+            (granted, error) in
+            if !granted {
+                //user declined
+            }
+        }
+        
+        
+        notifCenter.getNotificationSettings { (settings) in
+            if settings.authorizationStatus != .authorized {
+                // Notifications not allowed
+            }
         }
     }
 
