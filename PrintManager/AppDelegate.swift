@@ -15,10 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    //TODO: move to config file
+    var job: Job!
+    let serverUrl = "http://192.168.1.253" //"octopi.local" doesn't work on my pi
+    let apiKey = "75BD49121BBF41A5A0ED4E369C528769"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        registerForPushNotifications()
+        job = Job(serverUrl: serverUrl, apiKey: apiKey)
+        UIApplication.shared.setMinimumBackgroundFetchInterval(10)
+        registerNotifications()
         return true
     }
 
@@ -43,24 +48,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
-            print("Permission granted: \(granted)")
-            
-            guard granted else { return }
-            self.getNotificationSettings()
-        }
+    
+ 
+    func application(_ application: UIApplication,
+                     performFetchWithCompletionHandler completionHandler:
+        @escaping (UIBackgroundFetchResult) -> Void) {
+        // Check for new data.
+        
+        job.update()
+        job.checkForCompletion()
+        completionHandler(.newData)
     }
 
-    
-    func getNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            print("Notification settings: \(settings)")
-            guard settings.authorizationStatus == .authorized else { return }
-            //UIApplication.shared.registerForRemoteNotifications()
+
+
+    func registerNotifications() {
+        let notifCenter = UNUserNotificationCenter.current()
+        let notifTypes: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        notifCenter.requestAuthorization(options: notifTypes) {
+            (granted, error) in
+            if !granted {
+                //user declined
+            }
+        }
+        
+        
+        notifCenter.getNotificationSettings { (settings) in
+            if settings.authorizationStatus != .authorized {
+                // Notifications not allowed
+            }
         }
     }
 

@@ -9,6 +9,8 @@
 import UIKit
 import Foundation
 import WebKit
+import UserNotifications
+
 
 class FirstViewController: UIViewController, WKUIDelegate {
     @IBOutlet weak var uLblPrintCompletion: UILabel!
@@ -21,14 +23,15 @@ class FirstViewController: UIViewController, WKUIDelegate {
     
     
     //TODO: make these configurable
-    let serverUrl = "http://192.168.1.253" //"octoprint.local" doesn't work on my pi
-    let apiUrl = "http://192.168.1.253/api"
-    let apiKey = "75BD49121BBF41A5A0ED4E369C528769"
     
+    
+    var job: Job!
+    let serverUrl = "http://192.168.1.253" //"octopi.local" doesn't work on my pi
+    let apiKey = "75BD49121BBF41A5A0ED4E369C528769"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        job = Job(serverUrl: serverUrl, apiKey: apiKey)
         updateCurrentPrintInfo()
         
         //initialize camera
@@ -48,37 +51,13 @@ class FirstViewController: UIViewController, WKUIDelegate {
     
     
     func updateCurrentPrintInfo() {
-        let url = URL(string: "\(apiUrl)/job")!
-
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "GET"
-        request.addValue(apiKey, forHTTPHeaderField: "X-Api-Key")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                print(error!)
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                print(response!)
-                return
-            }
-            
-            let responseString = String(data: data, encoding: .utf8)
-            //print(responseString)
-            let jsonData = responseString!.data(using: .utf8)!
-            let job = try! JSONDecoder().decode(Job.self, from: jsonData)
-            
-            DispatchQueue.main.async {
-                self.updateJobLabels(detail: job)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                self.updateCurrentPrintInfo()
-            }
+        job.update()
+        DispatchQueue.main.async {
+            self.updateJobLabels()
         }
-        task.resume()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.updateCurrentPrintInfo()
+        }
     }
     
     
@@ -91,64 +70,67 @@ class FirstViewController: UIViewController, WKUIDelegate {
     }
     
     
-    func updateJobLabels(detail: Job) {
+    func updateJobLabels() {
+        var timeRemaining = -1.0
+        
         let oneHourSeconds = 3600.0
         self.uLblCurrentAction.isHidden = true
-        let completion = String(format:"%.2f", (detail.progress?.completion)!)
         
-        let timeRemaining = Double((detail.progress?.printTimeLeft)!) //in seconds
-        let timeElapsed = Double((detail.progress?.printTime)!)
-        
-        
-        if timeElapsed < oneHourSeconds {
-            let minutes = String(format:"%.0f", timeElapsed / 60.0)
-            self.uLblTimeElapsed.text = "Time Elapsed: \(minutes)m"
+        if(job.progress?.completion != -1) {
+            let completion = String(format:"%.2f", (job.progress?.completion)!)
+            
+            if job.progress?.printTimeLeft != nil {
+                timeRemaining = Double((job.progress?.printTimeLeft)!) //in seconds
+            }
+            
+            let timeElapsed = Double((job.progress?.printTime)!)
+            
+            
+            if timeElapsed < oneHourSeconds {
+                let minutes = String(format:"%.0f", timeElapsed / 60.0)
+                self.uLblTimeElapsed.text = "Time Elapsed: \(minutes)m"
+            }
+            else {
+                let hours = String(format:"%.1f", timeElapsed / 3600)
+                self.uLblTimeElapsed.text = "Time Elapsed: \(hours)h"
+            }
+            
+            
+            if timeRemaining < oneHourSeconds {
+                let minutes = String(format:"%.0f", timeRemaining / 60.0)
+                self.uLblTimeRemaining.text = "Est. Time Remaining: \(minutes)m"
+            }
+            else {
+                let hours = String(format:"%.1f", timeRemaining / 3600)
+                self.uLblTimeRemaining.text = "Est. Time Remaining: \(hours)h"
+            }
+            
+            self.uLblPrintCompletion.text = "Job Completion: \(completion)%"
+            
+            
+            let calendar = Calendar.current
+            let endDate = calendar.date(byAdding: .second, value: Int(timeRemaining), to: Date())
+            
+            var endHour = String(calendar.component(.hour, from: endDate!))
+            var endMinute = String(calendar.component(.minute, from: endDate!))
+            
+            if endHour.count == 1 {
+                endHour = "0\(endHour)"
+            }
+            if endMinute.count == 1 {
+                endMinute = "0\(endMinute)"
+            }
+            
+            self.uLblDateCompletion.text = "Est. Completion Date: \(endHour):\(endMinute)"
+            
+            
+            
+            self.uLblPrintCompletion.isHidden = false
+            self.uLblTimeRemaining.isHidden = false
+            self.uLblTimeElapsed.isHidden = false
+            self.uLblDateCompletion.isHidden = false
         }
-        else {
-            let hours = String(format:"%.1f", timeElapsed / 3600)
-            self.uLblTimeElapsed.text = "Time Elapsed: \(hours)h"
-        }
-        
-        
-        if timeRemaining < oneHourSeconds {
-            let minutes = String(format:"%.0f", timeRemaining / 60.0)
-            self.uLblTimeRemaining.text = "Est. Time Remaining: \(minutes)m"
-        }
-        else {
-            let hours = String(format:"%.1f", timeRemaining / 3600)
-            self.uLblTimeRemaining.text = "Est. Time Remaining: \(hours)h"
-        }
-        
-        self.uLblPrintCompletion.text = "Job Completion: \(completion)%"
-        
-        
-        let calendar = Calendar.current
-        let endDate = calendar.date(byAdding: .second, value: Int(timeRemaining), to: Date())
-        
-        var endHour = String(calendar.component(.hour, from: endDate!))
-        var endMinute = String(calendar.component(.minute, from: endDate!))
-        
-        if endHour.count == 1 {
-            endHour = "0\(endHour)"
-        }
-        if endMinute.count == 1 {
-            endMinute = "0\(endMinute)"
-        }
-        
-        self.uLblDateCompletion.text = "Est. Completion Date: \(endHour):\(endMinute)"
-        
-        
-        
-        self.uLblPrintCompletion.isHidden = false
-        self.uLblTimeRemaining.isHidden = false
-        self.uLblTimeElapsed.isHidden = false
-        self.uLblDateCompletion.isHidden = false
-        
     }
     
-    
-    
-    
-
 }
 
