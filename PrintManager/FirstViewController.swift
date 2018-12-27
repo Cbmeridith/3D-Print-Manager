@@ -111,10 +111,13 @@ class FirstViewController: UIViewController, WKUIDelegate {
                 self.uLblTimeElapsed.text = "Time Elapsed: \(hours)h"
             }
             
-            
             if timeRemaining < oneHourSeconds {
                 let minutes = String(format:"%.0f", timeRemaining / 60.0)
-                self.uLblTimeRemaining.text = "Est. Time Remaining: \(minutes)m"
+                if minutes != "-0"{
+                    self.uLblTimeRemaining.text = "Est. Time Remaining: \(minutes)m"
+                } else {
+                    self.uLblTimeRemaining.text = "Est. Time Remaining: Unknown"
+                }
             }
             else {
                 let hours = String(format:"%.1f", timeRemaining / 3600)
@@ -154,6 +157,7 @@ class FirstViewController: UIViewController, WKUIDelegate {
             switch settings.theme! {
                 case 0: setLightTheme(); break;
                 case 1: setDarkTheme(); break;
+                case 2: setBlackTheme(); break;
                 default: setLightTheme(); break;
             }
         }
@@ -169,8 +173,19 @@ class FirstViewController: UIViewController, WKUIDelegate {
         uLblPrintCompletion.textColor = UIColor.black
     }
     
-    
     func setDarkTheme(){
+        view.backgroundColor = UIColor.init(red: 50/255.0, green: 50/255.0, blue: 50/255.0, alpha: 1)
+        uLblCurrentAction.textColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 0/255.0, alpha: 1)
+        uLblTimeElapsed.textColor = UIColor.white
+        uLblTimeRemaining.textColor = UIColor.white
+        uLblDateCompletion.textColor = UIColor.white
+        uLblPrintCompletion.textColor = UIColor.white
+        var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
+        }
+    }
+    
+    func setBlackTheme(){
         view.backgroundColor = UIColor.black
         uLblCurrentAction.textColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 0/255.0, alpha: 1)
         uLblTimeElapsed.textColor = UIColor.white

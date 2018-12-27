@@ -24,6 +24,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.setMinimumBackgroundFetchInterval(1)
         registerNotifications()
         
+        // Set TabBar color
+        let tbController = self.window!.rootViewController as! UITabBarController
+        tbController.tabBar.isTranslucent = true
+        tbController.tabBar.barTintColor = UIColor.orange
+        tbController.tabBar.tintColor = UIColor.white
+        tbController.tabBar.unselectedItemTintColor = UIColor.black
+
+        
+        
+        // Set Status bar color
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+            statusBar.backgroundColor = UIColor.orange
+        }
+
+        
         return true
     }
 

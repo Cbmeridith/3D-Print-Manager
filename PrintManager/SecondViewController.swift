@@ -71,6 +71,8 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
             setLightTheme()
         case 1:
             setDarkTheme()
+        case 2:
+            setBlackTheme()
         default:
             setLightTheme()
         }
@@ -85,6 +87,7 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
             switch settings.theme! {
                 case 0: setLightTheme(); break;
                 case 1: setDarkTheme(); break;
+                case 2: setBlackTheme(); break;
                 default: setLightTheme(); break;
             }
         }
@@ -97,31 +100,28 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
         uLblApi.textColor = UIColor.black
         uLblTheme.textColor = UIColor.black
         themePicker.backgroundColor = UIColor.white
-        themePicker.tintColor = UIColor.init(red: 0/255.0, green: 77/255.0, blue: 255/255.0, alpha: 1)
-        
-        // below here doesn't work
-        var preferredStatusBarStyle: UIStatusBarStyle {
-            return .default
-        }
-        self.tabBar.badgeColor = UIColor.init(red: 0/255.0, green: 77/255.0, blue: 255/255.0, alpha: 1)
-        UITabBar.appearance().backgroundColor = UIColor.lightGray
+        themePicker.tintColor = UIColor.blue
+        //themePicker.tintColor = UIColor.init(red: 0/255.0, green: 77/255.0, blue: 255/255.0, alpha: 1)
     }
     
-    
     func setDarkTheme(){
+        view.backgroundColor = UIColor.init(red: 50/255.0, green: 50/255.0, blue: 50/255.0, alpha: 1)
+        uLblAddress.textColor = UIColor.white
+        uLblApi.textColor = UIColor.white
+        uLblTheme.textColor = UIColor.white
+        themePicker.backgroundColor = UIColor.init(red: 40/255.0, green: 40/255.0, blue: 40/255.0, alpha: 1)
+        themePicker.tintColor = UIColor.orange
+        //themePicker.tintColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 0/255.0, alpha: 1)
+    }
+    
+    func setBlackTheme(){
         view.backgroundColor = UIColor.black
         uLblAddress.textColor = UIColor.white
         uLblApi.textColor = UIColor.white
         uLblTheme.textColor = UIColor.white
         themePicker.backgroundColor = UIColor.black
-        themePicker.tintColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 0/255.0, alpha: 1)
-        
-        // below here doesn't work
-        var preferredStatusBarStyle: UIStatusBarStyle {
-            return .lightContent
-        }
-        self.tabBar.badgeColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 0/255.0, alpha: 1)
-        UITabBar.appearance().backgroundColor = UIColor.black
+        themePicker.tintColor = UIColor.orange
+        //themePicker.tintColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 0/255.0, alpha: 1)
     }
     
 }
